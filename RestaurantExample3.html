@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ti-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+    import {  getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+
+    
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyA9y5yDJUksBtgNv0yxwWBEd_cQ9J0X_rk",
+        authDomain: "foodreview-c74ab.firebaseapp.com",
+      projectId: "foodreview-c74ab",
+      storageBucket: "foodreview-c74ab.appspot.com",
+      messagingSenderId: "175684015837",
+      appId: "1:175684015837:web:0be2515d3ba1158df9ad34",
+      measurementId: "G-XFXLTB7TY4"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    const db = getDatabase();
+
+    const cmtForm = document.getElementById("cmtForm")
+    const cmtBtn = document.getElementById("cmtBtn")
+    
+    cmtBtn.addEventListener("click", (e) => {
+        e.preventDefault()
+        const msg = document.getElementById("msgMB").value
+        console.log(msg, localStorage.getItem("userName"));
+        console.log(msg);
+        if(msg != "") {
+            const db = getDatabase();
+            set(ref(db, 'restaurants/restaurant1/' + localStorage.getItem("userName")), {
+                name: localStorage.getItem("userName"),
+                msg: msg
+            });
+        }
+    })
+
+
+    console.log("geeeee");
+    const starCountRef = ref(db, 'restaurants/restaurant1');
+    onValue(starCountRef, (snapshot) => {
+    const data = snapshot.val();
+    console.log(data);
+    for (var key in data) {
+            // if (obj.hasOwnProperty(key)) {
+                var val = data[key];
+                console.log(data);
+    document.getElementsByClassName("be-comment-block")[0].innerHTML += `
+    <div class="be-comment">
+        <div class="be-img-comment">	
+            <a href="blog-detail-2.html">
+                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+            </a>
+        </div>
+        <div class="be-comment-content">
+            
+                <span class="be-comment-name">
+                    <a href="blog-detail-2.html">${val.name}</a>
+                    </span>
+                <span class="be-comment-time">
+                    <i class="fa fa-clock-o"></i>
+                    May 27, 2015 at 3:14am
+                </span>
+
+            <p class="be-comment-text">
+                ${val.msg}
+            </p>
+        </div>
+    </div>`
+}
+    });
+
+
+    // Todo: firebase
+    // set(ref(db, 'users/' + len+1), {
+    // name: username,
+    // email: email,
+    // password : password
+    // })
+    // .then((e) => {
+    // // Data saved successfully!
+    // console.log(e);
+    // })
+    // .catch((error) => {
+    // // The write failed...
+    // console.error(error)
+    // });
+</script>
+<body>
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-7 col-lg-4 mb-5 mb-lg-0 wow fadeIn">
+                <div class="card border-0 shadow">
+                    <img src="https://www.bootdey.com/img/Content/avatar/avatar6.png" alt="...">
+                    <div class="card-body p-1-9 p-xl-5">
+                        <div class="mb-4">
+                            <h3 class="h4 mb-0">Ram & Sons Restaurant</h3>
+                            <span class="text-primary">Address</span>
+                        </div>
+                        <ul class="list-unstyled mb-4">
+                            <!-- <li class="mb-3"><a href="#!"><i class="far fa-envelope display-25 me-3 text-secondary"></i>dakota@gmail.com</a></li> -->
+                            
+                            <li><a href="#!"><i class="fas fa-map-marker-alt display-25 me-3 text-secondary"></i>204 Main Market, Agra</a></li>
+                            <li class="mb-3"><a href="#!"><i class="fas fa-mobile-alt display-25 me-3 text-secondary"></i>Ph. no. 99999999 </a></li>
+                        </ul>
+                        <ul class="social-icon-style2 ps-0">
+                            <li><a href="#!" class="rounded-3"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="#!" class="rounded-3"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="#!" class="rounded-3"><i class="fab fa-youtube"></i></a></li>
+                            <li><a href="#!" class="rounded-3"><i class="fab fa-linkedin-in"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="ps-lg-1-6 ps-xl-5">
+                    <div class="mb-5 wow fadeIn">
+                        <div class="text-start mb-1-6 wow fadeIn">
+                            <h2 class="h1 mb-0 text-primary">About hotel</h2>
+                        </div>
+                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
+                        <p class="mb-0">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                    </div>
+                    <div class="mb-5 wow fadeIn">
+                        <div class="text-start mb-1-6 wow fadeIn">
+                            
+                            <h2 class="mb-0 text-primary"><i class='fas fa-hamburger' style='font-size:35px;color:rgb(247, 149, 2)'></i> Dishes Available</h2>
+                        </div>
+                        <div class="row mt-n4">
+                            <div class="col-sm-6 col-xl-4 mt-4">
+                                <div class="card text-center border-0 rounded-3">
+                                    <div class="card-body">
+                                        <!-- <i class="ti-bookmark-alt icon-box medium rounded-3 mb-4"></i> -->
+                                        <h3 class="h5 mb-3">1. Chole Bhature</h3>
+                                        <p class="mb-0">It is an authentic Punjabi dish</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-xl-4 mt-4">
+                                <div class="card text-center border-0 rounded-3">
+                                    <div class="card-body">
+                                        <!-- <i class="ti-pencil-alt icon-box medium rounded-3 mb-4"></i> -->
+                                        <h3 class="h5 mb-3">Price: <i class='fas fa-rupee-sign' style='font-size:14px'></i> 100</h3>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="container">
+    <div id="reviews" class="review-section">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h4 class="m-0">37 Reviews</h4>
+            <select class="custom-select custom-select-sm border-0 shadow-sm ml-2 select2-hidden-accessible" data-select2-id="1" tabindex="-1" aria-hidden="true">
+                <option data-select2-id="3">Most Relevant</option>
+                <option>Most Recent</option>
+            </select>
+            <span class="select2 select2-container select2-container--default" dir="ltr" data-select2-id="2" style="width: 188px;">
+                <span class="selection">
+                    <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-qd66-container">
+                        <span class="select2-selection__rendered" id="select2-qd66-container" role="textbox" aria-readonly="true" title="Most Relevant">Most Relevant</span>
+                        <span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span>
+                    </span>
+                </span>
+                <span class="dropdown-wrapper" aria-hidden="true"></span>
+            </span>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <table class="stars-counters">
+                    <tbody>
+                        <tr class="">
+                            <td>
+                                <span>
+                                    <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">5 Stars</button>
+                                </span>
+                            </td>
+                            <td class="progress-bar-container">
+                                <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                                    <div class="fit-progressbar-background">
+                                        <span class="progress-fill" style="width: 97.2973%;"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="star-num">(36)</td>
+                        </tr>
+                        <tr class="">
+                            <td>
+                                <span>
+                                    <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">5 Stars</button>
+                                </span>
+                            </td>
+                            <td class="progress-bar-container">
+                                <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                                    <div class="fit-progressbar-background">
+                                        <span class="progress-fill" style="width: 2.2973%;"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="star-num">(2)</td>
+                        </tr>
+                        <tr class="">
+                            <td>
+                                <span>
+                                    <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">5 Stars</button>
+                                </span>
+                            </td>
+                            <td class="progress-bar-container">
+                                <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                                    <div class="fit-progressbar-background">
+                                        <span class="progress-fill" style="width: 0;"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="star-num">(0)</td>
+                        </tr>
+                        <tr class="">
+                            <td>
+                                <span>
+                                    <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">5 Stars</button>
+                                </span>
+                            </td>
+                            <td class="progress-bar-container">
+                                <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                                    <div class="fit-progressbar-background">
+                                        <span class="progress-fill" style="width: 0;"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="star-num">(0)</td>
+                        </tr>
+                        <tr class="">
+                            <td>
+                                <span>
+                                    <button class="fit-button fit-button-color-blue fit-button-fill-ghost fit-button-size-medium stars-filter">5 Stars</button>
+                                </span>
+                            </td>
+                            <td class="progress-bar-container">
+                                <div class="fit-progressbar fit-progressbar-bar star-progress-bar">
+                                    <div class="fit-progressbar-background">
+                                        <span class="progress-fill" style="width: 0;"></span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="star-num">(0)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <div class="ranking">
+                    <h6 class="text-display-7">Rating Breakdown</h6>
+                    <ul>
+                        <li>
+                            Seller communication level<span>5<span class="review-star rate-10 show-one"></span></span>
+                        </li>
+                        <li>
+                            Recommend to a friend<span>5<span class="review-star rate-10 show-one"></span></span>
+                        </li>
+                        <li>
+                            Service as described<span>4.9<span class="review-star rate-10 show-one"></span></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <!-- DWS Bootstrap 5.0 -->
+        <form id="cmtForm">
+            <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Feedback</label>
+            <textarea name="msg" id="msgMB" cols="50" rows="5" class="form-control"></textarea>
+            </div>
+            <button type="submit" id="cmtBtn" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <br><br>
+    <div class="container">
+    <div class="be-comment-block">
+        <h1 class="comments-title">Comments (3)</h1>
+        <div class="be-comment">
+            <div class="be-img-comment">	
+                <a href="blog-detail-2.html">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="" class="be-ava-comment">
+                </a>
+            </div>
+            <div class="be-comment-content">
+                
+                    <span class="be-comment-name">
+                        <a href="blog-detail-2.html">Ravi Sah</a>
+                        </span>
+                    <span class="be-comment-time">
+                        <i class="fa fa-clock-o"></i>
+                        March 27, 2022 at 4:44am
+                    </span>
+
+                <p class="be-comment-text">
+                    Pellentesque gravida tristique ultrices. 
+                    Sed blandit varius mauris, vel volutpat urna hendrerit id. 
+                    Curabitur rutrum dolor gravida turpis tristique efficitur.
+                </p>
+            </div>
+        </div>
+        <div class="be-comment">
+            <div class="be-img-comment">	
+                <a href="blog-detail-2.html">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="" class="be-ava-comment">
+                </a>
+            </div>
+            <div class="be-comment-content">
+                <span class="be-comment-name">
+                    <a href="blog-detail-2.html">Phoenix, the Creative Studio</a>
+                </span>
+                <span class="be-comment-time">
+                    <i class="fa fa-clock-o"></i>
+                    March 27, 2022 at 4:44am
+                </span>
+                <p class="be-comment-text">
+                    Nunc ornare sed dolor sed mattis. In scelerisque dui a arcu mattis, at maximus eros commodo. Cras magna nunc, cursus lobortis luctus at, sollicitudin vel neque. Duis eleifend lorem non ant. Proin ut ornare lectus, vel eleifend est. Fusce hendrerit dui in turpis tristique blandit.
+                </p>
+            </div>
+        </div>
+        <div class="be-comment">
+            <div class="be-img-comment">	
+                <a href="blog-detail-2.html">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="" class="be-ava-comment">
+                </a>
+            </div>
+            <div class="be-comment-content">
+                <span class="be-comment-name">
+                    <a href="blog-detail-2.html">Cüneyt ŞEN</a>
+                </span>
+                <span class="be-comment-time">
+                    <i class="fa fa-clock-o"></i>
+                    March 27, 2022 at 4:44am
+                </span>
+                <p class="be-comment-text">
+                    Cras magna nunc, cursus lobortis luctus at, sollicitudin vel neque. Duis eleifend lorem non ant
+                </p>
+            </div>
+        </div>
+       
+    </div>
+    </div>
+</div>
+
+

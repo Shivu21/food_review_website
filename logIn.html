@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in</title>
+    <link rel="stylesheet" href="css/style2.css">
+    <script src="./js/handleInputs.js"></script>
+</head>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+import {  getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+import { getAuth, createUserWithEmailAndPassword,updateProfile ,signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyA9y5yDJUksBtgNv0yxwWBEd_cQ9J0X_rk",
+authDomain: "foodreview-c74ab.firebaseapp.com",
+projectId: "foodreview-c74ab",
+storageBucket: "foodreview-c74ab.appspot.com",
+messagingSenderId: "175684015837",
+appId: "1:175684015837:web:0be2515d3ba1158df9ad34",
+measurementId: "G-XFXLTB7TY4"
+};
+
+// Initialize Firebase
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+
+// Initialize Firebase Authentication and get a reference to the service
+const auth = getAuth(app);
+
+
+loginForm = document.getElementById("loginForm")
+loginBtn = document.getElementById("signIn")
+
+loginBtn.addEventListener("click", (e) => {
+    e.preventDefault()
+    const email = loginForm.email.value;
+    const password = loginForm.password.value;
+    // TODO: validation
+    if (email == "" || password == "" ) {
+        alert("Not psoss")
+        return;
+    }
+
+signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert("Try different combo")
+  });
+
+  onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/firebase.User
+    const uid = user.uid;
+    localStorage.setItem("userName", user.DisplayName)
+    // ...
+  } else {
+    // User is signed out
+    // ...
+  }
+  console.log(localStorage.getItem("userName"));
+});
+
+  window.location.href = "http://127.0.0.1:5500/home.html";
+})
+
+</script>
+<body>
+    <section>
+        <div class="imgbx">
+            <img src="images/home-img-1.png">
+        </div>
+        <div class ="contentbx">
+            <div class ="formbx">
+                <h2>Sign in</h2>
+                <form id="loginForm">
+                    <div class ="inputbx">
+                        <span>Email</span>
+                        <input type="text" name="email">
+                    </div>
+                    <div class="inputbx">
+                        <span>Password</span>
+                        <input type="password" name="password">
+                    </div>
+                    <div class="remember">
+                        <label><input type="checkbox" name=""> Remember me</label>
+                    </div>
+                    <div class ="inputbx">
+                        <input type="submit" id="signIn" value ="Sign in"name="signin_submit">
+                        <div class="inputbx">
+                            <p>Don't have an account?<a href="./signUp.html">Sign up</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </section>
+    <script>
+    </script>
+</body>
+</html>

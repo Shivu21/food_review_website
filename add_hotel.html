@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contact us</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+      * {
+      box-sizing: border-box;
+      }
+      html, body {
+      min-height: 100vh;
+      padding: 0;
+      margin: 0;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 14px; 
+      color: #666;
+      }
+      input, textarea { 
+      outline: none;
+      }
+      body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: #5a7233;
+      }
+      h1 {
+      margin-top: 0;
+      font-weight: 500;
+      }
+      form {
+      position: relative;
+      width: 80%;
+      border-radius: 30px;
+      background: #fff;
+      }
+      .form-left-decoration,
+      .form-right-decoration {
+      content: "";
+      position: absolute;
+      width: 50px;
+      height: 20px;
+      border-radius: 20px;
+      background: #5a7233;
+      }
+      .form-left-decoration {
+      bottom: 60px;
+      left: -30px;
+      }
+      .form-right-decoration {
+      top: 60px;
+      right: -30px;
+      }
+      .form-left-decoration:before,
+      .form-left-decoration:after,
+      .form-right-decoration:before,
+      .form-right-decoration:after {
+      content: "";
+      position: absolute;
+      width: 50px;
+      height: 20px;
+      border-radius: 30px;
+      background: #fff;
+      }
+      .form-left-decoration:before {
+      top: -20px;
+      }
+      .form-left-decoration:after {
+      top: 20px;
+      left: 10px;
+      }
+      .form-right-decoration:before {
+      top: -20px;
+      right: 0;
+      }
+      .form-right-decoration:after {
+      top: 20px;
+      right: 10px;
+      }
+      .circle {
+      position: absolute;
+      bottom: 80px;
+      left: -55px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      }
+      .form-inner {
+      padding: 40px;
+      }
+      .form-inner input,
+      .form-inner textarea {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 10px;
+      border: none;
+      border-radius: 20px;
+      background: #d0dfe8;
+      }
+      .form-inner textarea {
+      resize: none;
+      }
+      button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      border-radius: 20px;
+      border: none;
+      border-bottom: 4px solid #3e4f24;
+      background: #941414; 
+      font-size: 16px;
+      font-weight: 400;
+      color: #fff;
+      }
+      button:hover {
+      background: #5a7233;
+      } 
+      @media (min-width: 568px) {
+      form {
+      width: 60%;
+      }
+      }
+    </style>
+  </head>
+  <body>
+    <form action="{% url 'hotel' %}" id="frm" class="decor" method="post" enctype="multipart/pictures">
+
+      <div class="form-left-decoration"></div>
+      <div class="form-right-decoration"></div>
+      <div class="circle"></div>
+      <div class="form-inner">
+         
+    
+        <h1>About hotel</h1>
+        <input type="text" id="hotel_name" name="hotel_name" placeholder="Enter hotel name">
+        <input type="text" id="addr" name="addr" placeholder="Address">
+        <input type="text" id="dishName"  name="dish_name" placeholder="Enter Dish name">
+        <!-- <input type="file" id="" name="picture" placeholder="Upload picture"> -->
+        <input type="text" id="about" name="about" placeholder="Share your Experience">
+        <input type="text" id="price" name="price" placeholder="Dish's price">
+        <button type="submit" id="hotBtn">Submit</button>
+      </div>
+    </form>
+    <script>
+      let hotel_name = document.getElementById("hotel_name").value;
+      let addr = document.getElementById("addr");
+      let dishName = document.getElementById("dishName").value;
+      let about = document.getElementById("about").value;
+      let price = document.getElementById("price").value;
+      let hotBtn = document.getElementById("hotBtn")
+      hotBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+      const frm  = document.getElementById("frm")
+      const hotel_name = frm.hotel_name.value;
+      const addr = frm.addr.value;
+      const price = frm.price.value;
+      const about = frm.about.value;
+        console.log(addr);
+        localStorage.setItem("hotel_name", hotel_name)
+        localStorage.setItem("addr", addr)
+        localStorage.setItem("dishName", dishName)
+        localStorage.setItem("about", about)
+        localStorage.setItem("price", price)
+        window.location.href = "http://127.0.0.1:5500/Add_Restaurant.html"
+      })
+    </script>
+  </body>
+</html>
